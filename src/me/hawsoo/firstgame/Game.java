@@ -141,7 +141,7 @@ public class Game extends Canvas implements Runnable
 	public void render()
 	{
 		// Calculate width and height
-		if (getWidth() != prevW || getHeight() != prevH) updateRealDimensions();
+		/*if (getWidth() != prevW || getHeight() != prevH) */updateRealDimensions();
 		
 		System.out.println(getWidth() + "x" + getHeight());
 		
@@ -250,6 +250,7 @@ public class Game extends Canvas implements Runnable
 		frame.getContentPane().setPreferredSize(INITIAL_DIM);
 		frame.getContentPane().setBackground(Color.black);
 		frame.pack();
+		frame.setMinimumSize(frame.getSize());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
