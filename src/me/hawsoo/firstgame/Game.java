@@ -23,16 +23,17 @@ public class Game extends Canvas implements Runnable
 	public static final String NAME = "First Game -- PreAlpha (By Hawsoo)";
 	private static final long serialVersionUID = 1L;
 	
-	private static final Dimension INITIAL_DIM = new Dimension(640, 360);
+	private static final Dimension GAME_DIM = new Dimension(640, 360);
 	private static final int FPS = 60;
 	
 	private BufferStrategy bStrat;
 	private boolean running = false;
 	
+	private float scale = 1;
 	private int width;
 	private int height;
-	private int prevW = INITIAL_DIM.width;
-	private int prevH = INITIAL_DIM.height;
+	private int prevW = GAME_DIM.width;
+	private int prevH = GAME_DIM.height;
 	private float aspect = 16f / 9;
 	
 	/**
@@ -40,8 +41,6 @@ public class Game extends Canvas implements Runnable
 	 */
 	public Game()
 	{
-//		setPreferredSize(INITIAL_DIM);
-		
 		// Setup properties
 		setIgnoreRepaint(true);
 		setVisible(true);
@@ -85,6 +84,9 @@ public class Game extends Canvas implements Runnable
 			width = getWidth();
 			height = preferH;
 		}
+		
+		// Calculate scale
+		scale = (float)width / GAME_DIM.width;
 		
 		// Reset flags
 		prevW = getWidth();
@@ -143,15 +145,17 @@ public class Game extends Canvas implements Runnable
 		// Calculate width and height
 		updateRealDimensions();
 		
-		System.out.println(getWidth() + "x" + getHeight());
-		
 		// Clear buffer
 		Graphics2D g = (Graphics2D)bStrat.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
+		// BETA this draws the clipping space
 		g.setColor(Color.red);
 		g.drawRect((getWidth() / 2) - (width / 2), (getHeight() / 2) - (height / 2), width - 1, height - 1);
+		
+		// Render
+		// FIXME add a beta sprite here
 		
 		// Clear graphics and flip buffer
 		g.dispose();
@@ -247,17 +251,17 @@ public class Game extends Canvas implements Runnable
 		Game game = new Game();
 		
 		frame.add(game, BorderLayout.CENTER);
-		frame.getContentPane().setPreferredSize(INITIAL_DIM);
+		frame.getContentPane().setPreferredSize(GAME_DIM);
 		frame.getContentPane().setBackground(Color.black);
 		frame.pack();
 		frame.setMinimumSize(frame.getSize());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
-		// Setup buffering
+		// Setup game
 		game.setupBuffering();
+		game.updateRealDimensions();
 		
-		// Start thread
 		game.start();
 	}
 }
