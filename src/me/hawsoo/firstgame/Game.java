@@ -76,7 +76,7 @@ public class Game extends Canvas implements Runnable
 		else if (height < preferH)
 		{
 			// Horizontal bias
-			width = (int) (height * aspect);
+			width = (int) (getHeight() * aspect);
 			height = getHeight();
 		}
 		else
@@ -141,7 +141,7 @@ public class Game extends Canvas implements Runnable
 	public void render()
 	{
 		// Calculate width and height
-		/*if (getWidth() != prevW || getHeight() != prevH) */updateRealDimensions();
+		updateRealDimensions();
 		
 		System.out.println(getWidth() + "x" + getHeight());
 		
@@ -151,7 +151,7 @@ public class Game extends Canvas implements Runnable
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		g.setColor(Color.red);
-		g.fillRect((getWidth() / 2) - (width / 2), (getHeight() / 2) - (height / 2), width, height);
+		g.drawRect((getWidth() / 2) - (width / 2), (getHeight() / 2) - (height / 2), width - 1, height - 1);
 		
 		// Clear graphics and flip buffer
 		g.dispose();
